@@ -1,0 +1,29 @@
+# .github/workflows/ci.yml
+name: CI Build
+
+on:
+  push:
+    branches:
+      - main # Trigger on pushes to the 'main' branch
+  pull_request:
+    branches:
+      - main # Also trigger on pull requests targeting the 'main' branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # Use the latest Ubuntu environment
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4 # Action to pull your repository's code
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18' # Specify the Node.js version your app needs
+
+    - name: Install dependencies
+      run: npm ci # Installs dependencies cleanly from package-lock.json
+
+    - name: Build project
+      run: npm run build # Runs the build script to create the 'build' folder
